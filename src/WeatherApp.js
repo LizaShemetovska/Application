@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import 'bulma/css/bulma.css';
+import '../node_modules/bulma/css/bulma.css'
 const PLACES =[
   {name: "Rivne", zip:"33000"},
   {name: "Washington" ,zip:"20001"},
   {name: "Los Angeles" ,zip:"90023"},
-  {name: "Seattle" ,zip:"98101"}
+  {name: "Seattle" ,zip:"98101"},
+  {name: "Kiev" ,zip:"03134"}
+  
 
 ];
 class WeatherService extends Component{
@@ -30,19 +32,35 @@ class WeatherService extends Component{
     const iconURL="http://api.openweathermap.org/img/w/" +weather.icon +".png";
     return(
       // <div>{JSON.stringify(weatherData)}</div>
-      <div>
-        <h1>
-          {weather.main} in {weatherData.name}
+     
+      <div id="main">
+      <div className="columns is-centered" >
+<div class="card">
+<header class="card-header ">
+<h1>
+       <p className="subtitle is-2">  {weather.main} in {weatherData.name}
           <img src={iconURL} alt ={weatherData.description}/>
-        </h1>
+          </p>
+ </h1>
+</header>
+<div class="card-content">
+<div>
         
-<p>Current temp: {weatherData.main.temp}°C</p>
-    <p>Min temp: {weatherData.main.temp_min}°C</p>
-    <p>Max temp: {weatherData.main.temp_max}°C</p>
-    <p>Wind speed: {weatherData.wind.speed} m/sec</p>
-    <p>Pressure: {weatherData.main.pressure} pasc</p>
-  
+        
+        <p>Current temp: {weatherData.main.temp} °C</p>
+        <p>Min temp: {weatherData.main.temp_min} °C</p>
+        <p>Max temp: {weatherData.main.temp_max} °C</p>
+        <p>Wind speed: {weatherData.wind.speed} m/sec</p>
+        <p>Pressure: {weatherData.main.pressure} mb</p>
+      
     </div>
+</div>
+<footer class="card-footer">
+
+</footer>
+</div>
+</div>
+</div>
     );
 
   } 
@@ -60,13 +78,18 @@ constructor(){
     return (
       <div className="App">
       <WeatherService zip={PLACES[activePlace].zip} key={activePlace}/>
+      <br></br>
+      <div>
       { PLACES.map((place,index)=> (
-         <button className={"button is-rounded"} key={index} onClick={()=> {this.setState({activePlace:index})} }> 
-        {/* (console.log(`Clicked ${index} button`))} > */}
+         <button className={"button is-danger is-rounded"} key={index} onClick={()=> {this.setState({activePlace:index})} }> 
+    
         {place.name}
         </button>
       ))}
       </div>
+      </div>
+
+      
     );
   }
 }

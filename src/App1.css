@@ -1,0 +1,11 @@
+.card .card-header {
+    background-color:black;
+  }
+  
+  .card .card-content {
+    background-color:#133849;
+  }
+  p,.card-header p{
+    color: #7da0b1;
+  }
+  

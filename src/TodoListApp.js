@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+
 import './App.css';
+import { parse } from 'url';
+import '../node_modules/bulma/css/bulma.css';
+
+
 let todoItems = [];
 todoItems.push({ index: 1, value: "To do task from Math", done: false });
 todoItems.push({ index: 2, value: "Learn Docker", done: false });
 todoItems.push({ index: 3, value: "Solve all problems in a hole world", done: false });
 todoItems.push({ index: 4, value: "Become older", done: true });
-
 
 
 
@@ -36,25 +39,30 @@ class TodoListItem extends Component {
   render() {
     let todoClass = this.props.item.done ? "done" : "undone";
     return (
-     <div className="block">
+      <li>
 
-        <div className={todoClass}>
-          <span className="glyphicon glyphicon-ok icon"
-            aris-hidden="true"
-            onClick={this.onClickDone}>   </span>
-          {this.props.item.value}  
-           
-          <button type="button" className="delete is-medium"
-            onClick={this.onClickClose}>&times;</button>
+       
+      <div className={"columns"}> 
+        <div className="column"> {this.props.item.value}</div>
+        <div className="column">
+        <button type="button" className="button is-primary is-rounded" onClick={this.onClickClose}><span>&times;</span></button>
+       
+        
         </div>
-
+        <div className="column">
+        <button className="button is-primary is-rounded" onClick={this.onClickDone}>
+        <span>{todoClass}</span>
+        </button>
         </div>
+      </div>
+    </li>
     );
 
   };
 
 }
-class TodoForm extends Component {
+
+class ToDoForm extends Component {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
@@ -72,16 +80,17 @@ class TodoForm extends Component {
   render() {
     return (
       <form ref="form" onSubmit={this.onSubmit} className="form-inline">
-        <input type="text" ref="itemName" className="form=control" placeholder="add new task.."></input>
-        <button type="submit" className="btn btn-default ">Add</button>
+        <input type="text" ref="itemName" className="input is-info" placeholder="Add "></input>
+        <button className="button is-primary is-rounded">Add</button>
       </form>
     );
 
   };
 }
+
 class TodoHeader extends Component {
   render() {
-    return <h1>What do you want to do ? </h1>
+    return <p class="subtitle is-3">What do you want to do ?</p>
   };
 }
 class TodoApp extends Component {
@@ -115,10 +124,31 @@ class TodoApp extends Component {
   }
   render() {
     return (
-        <div id="main">
-        <TodoHeader />
-        <TodoList items={this.props.initItems} removeItem={this.removeItem} markTodoDone={this.markTodoDone} />
-        <TodoForm addItem={this.addItem} />
+      <div id="main">
+       <div className="columns is-centered" >
+
+<div class="card column is-half  .is-multiline">
+
+
+  <header class="card-header columns is-centered">
+    <p class="card-header-title column is-half .is-multiline">
+    <TodoHeader/>
+    </p>
+  </header>
+  
+  <div class="card-content">
+  <TodoList items={this.props.initItems} removeItem={this.removeItem} markDone={this.markDone}/>
+     
+  </div >
+  <footer class="card-footer columns is-centered">
+  <div class="column is-half .is-multiline">
+  <ToDoForm addItem={this.addItem}/>
+  </div>
+  
+  </footer>
+  </div>
+      
+</div>
 
       </div>
     );
@@ -127,7 +157,7 @@ class TodoApp extends Component {
 class App extends Component {
   render() {
     return (
-        <div className="App">
+      <div className="App">
         {/* load  */}
         <TodoApp initItems={todoItems} />
       </div>
